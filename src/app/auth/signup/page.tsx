@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function RegisterPage() {
   return (
-    <div className="bg-[linear-gradient(to_bottom_right,color-mix(in_srgb,var(--primary)_50%,transparent)_0%,transparent_60%)] dark:bg-[linear-gradient(to_bottom_right,color-mix(in_srgb,var(--primary)_50%,transparent)_0%,transparent_60%)] md:bg-none md:dark:bg-none md:bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+    <div className="bg-[linear-gradient(to_top_left,color-mix(in_srgb,var(--primary)_50%,transparent)_0%,transparent_60%)] dark:bg-[linear-gradient(to_top_left,color-mix(in_srgb,var(--primary)_50%,transparent)_0%,transparent_60%)] md:bg-none md:dark:bg-none md:bg-muted flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
       <div className="w-full max-w-sm md:max-w-4xl flex flex-col gap-6 md:gap-10 lg:gap-12">
         <Link
           href="/"
