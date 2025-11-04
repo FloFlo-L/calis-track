@@ -19,7 +19,7 @@ export default function ProgressionSection() {
         <div className="flex flex-col md:flex-row items-center justify-center gap-8 md:gap-12">
           <div className="flex items-center justify-center">
             <Image
-              src="/images/start_level.png"
+              src="/images/beginner_level.png"
               alt="Beginner"
               className="w-full h-86 md:h-auto lg:h-96 object-cover"
               width={1000}
