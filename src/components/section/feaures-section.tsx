@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import Image from "next/image";
 import { Android } from "../ui/android";
 
 export default function FeaturesSection() {
@@ -9,10 +10,20 @@ export default function FeaturesSection() {
     "Track your workout progress",
   ];
   return (
-    <section className="px-6 md:px-10 py-16 lg:py-24 bg-muted" id="features">
+    <section
+      className="px-6 md:px-10 pt-16 pb-36 lg:pt-24 lg:pb-48 bg-muted"
+      id="features"
+    >
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
-        <div className="flex flex-col items-center justify-center order-2 lg:order-1">
-          <Android src="" className="w-56 lg:w-72 h-auto" />
+        <div className="flex flex-col items-center justify-center order-2 lg:order-1 relative">
+          <Android src="" className="w-50 lg:w-60 h-auto mx-auto" />
+          <Image
+            src="/images/carry-illustration.png"
+            alt="Carry illustration"
+            width={1000}
+            height={1000}
+            className="absolute left-[calc(50%-10px)] -translate-x-1/2 w-55 lg:w-72 -bottom-38 lg:-bottom-51 h-auto object-cover"
+          />
         </div>
         {/* Features List */}
         <div className="space-y-6 flex flex-col items-center lg:items-start order-1 lg:order-2">
@@ -23,7 +34,7 @@ export default function FeaturesSection() {
             Transform your training with a complete app to progress in
             calisthenics.
           </p>
-          <ul className="space-y-4">
+          <ul className="space-y-4 mt-4 lg:mt-8">
             {features.map((feature, index) => (
               <li key={index} className="flex items-start gap-3">
                 <div className="flex w-6 h-6 shrink-0 items-center justify-center rounded-full bg-primary">

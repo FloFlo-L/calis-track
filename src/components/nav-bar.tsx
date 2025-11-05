@@ -40,11 +40,16 @@ export default function Navbar() {
 
                 <SheetContent side="left" className="w-[300px] sm:w-[400px]">
                   <SheetHeader>
-                    <SheetTitle>Menu</SheetTitle>
+                    <SheetTitle className="flex items-center gap-2">
+                      <div className="w-8 h-8 bg-primary text-primary-foreground rounded-lg flex items-center justify-center">
+                        <BicepsFlexed strokeWidth={1.5} />
+                      </div>
+                      <span className="font-bold text-xl">CalisTrack</span>
+                    </SheetTitle>
                     <SheetDescription>Navigation</SheetDescription>
                   </SheetHeader>
 
-                  <ul className="flex flex-col gap-6 mt-4 px-2">
+                  <ul className="flex flex-col gap-4 px-2 pt-2">
                     {navLinks.map((link) => (
                       <li key={link.hash}>
                         <Link
@@ -58,19 +63,12 @@ export default function Navbar() {
                     ))}
                   </ul>
 
-                  <div className="flex flex-col gap-3 mt-6 px-2">
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="w-full bg-transparent"
-                    >
-                      Sign In
+                  <div className="flex flex-col gap-3 px-2 pt-2">
+                    <Button variant="outline" asChild>
+                      <Link href="/auth/login">Sign In</Link>
                     </Button>
-                    <Button
-                      size="lg"
-                      className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
-                    >
-                      Get Started
+                    <Button asChild>
+                      <Link href="/auth/signup">Get Started</Link>
                     </Button>
                     {/* ThemeToggle intentionally removed from sheet */}
                   </div>
