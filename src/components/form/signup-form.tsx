@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -8,18 +10,64 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault();
+    const formData = new FormData(evt.target as HTMLFormElement);
+
+    const email = String(formData.get("email"));
+    if (!email) {
+      return toast.error("Email is required");
+    }
+
+    const password = String(formData.get("password"));
+    if (!password) {
+      return toast.error("Password is required");
+    }
+
+    const confirmPassword = String(formData.get("confirm-password"));
+    if (!confirmPassword) {
+      return toast.error("Confirm Password is required");
+    }
+    if (password !== confirmPassword) {
+      return toast.error("Passwords do not match");
+    }
+
+    console.log({ email, password, confirmPassword });
+
+    await authClient.signUp.email(
+      {
+        email,
+        name: "", // user name (optional)
+        password,
+      },
+      {
+        onRequest: () => {
+          // do somethinng
+        },
+        onSuccess: () => {
+          // redirect or show success message
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      }
+    );
+  }
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="overflow-hidden p-0">
         <CardContent className="grid p-0 md:grid-cols-2">
-          <form className="p-6 md:p-8">
+          <form className="p-6 md:p-8" onSubmit={handleSubmit}>
             <FieldGroup>
               <div className="flex flex-col items-center gap-2 text-center">
                 <h1 className="text-2xl font-bold">Create your account</h1>
@@ -31,24 +79,24 @@ export function SignupForm({
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
-                  required
                 />
               </Field>
               <Field>
-                <Field className="grid grid-cols-2 gap-4">
-                  <Field>
-                    <FieldLabel htmlFor="password">Password</FieldLabel>
-                    <Input id="password" type="password" required />
-                  </Field>
-                  <Field>
-                    <FieldLabel htmlFor="confirm-password">
-                      Confirm Password
-                    </FieldLabel>
-                    <Input id="confirm-password" type="password" required />
-                  </Field>
-                </Field>
+                <FieldLabel htmlFor="password">Password</FieldLabel>
+                <Input id="password" name="password" type="password" />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="confirm-password">
+                  Confirm Password
+                </FieldLabel>
+                <Input
+                  id="confirm-password"
+                  name="confirm-password"
+                  type="password"
+                />
               </Field>
               <Field>
                 <Button type="submit">Create Account</Button>
