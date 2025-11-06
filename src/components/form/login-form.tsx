@@ -35,8 +35,6 @@ export function LoginForm({
     const password = String(formData.get("password"));
     if (!password) return toast.error("Password is required");
 
-    console.log({ email, password });
-
     await authClient.signIn.email(
       {
         email,
