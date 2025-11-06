@@ -46,7 +46,7 @@ export default function ReviewSection() {
             return (
               <Card key={index} className="p-6 md:p-8">
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-muted flex items-center justify-center text-lg font-semibold text-primary">
+                  <div className="size-10 md:size-12 text-sm rounded-full bg-muted flex items-center justify-center md:text-lg font-semibold text-primary">
                     <span aria-hidden="true">{initial}</span>
                     <span className="sr-only">{review.name}</span>
                   </div>
@@ -62,7 +62,7 @@ export default function ReviewSection() {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
-                      className={`w-5 h-5 ${
+                      className={`size-4 md:size-5 ${
                         i < review.rating
                           ? "fill-primary text-primary"
                           : "text-muted-foreground"
@@ -72,7 +72,9 @@ export default function ReviewSection() {
                 </div>
 
                 <p className="text-muted-foreground leading-relaxed">
-                  &quot;{review.text}&quot;
+                  <span className="text-primary font-bold">&quot;</span>
+                  {review.text}
+                  <span className="text-primary font-bold">&quot;</span>
                 </p>
               </Card>
             );

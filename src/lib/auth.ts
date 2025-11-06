@@ -8,5 +8,11 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    autoSignIn: false,
+  },
+  advanced: {
+    database: {
+      generateId: false,
+    },
   },
 });

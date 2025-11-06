@@ -10,51 +10,55 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import React from "react";
 import { toast } from "sonner";
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const [isPending, setIsPending] = React.useState(false);
+  const router = useRouter();
+
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
     const formData = new FormData(evt.target as HTMLFormElement);
 
+    const name = String(formData.get("name"));
+    if (!name) return toast.error("Name is required");
+
     const email = String(formData.get("email"));
-    if (!email) {
-      return toast.error("Email is required");
-    }
+    if (!email) return toast.error("Email is required");
 
     const password = String(formData.get("password"));
-    if (!password) {
-      return toast.error("Password is required");
-    }
+    if (!password) return toast.error("Password is required");
 
     const confirmPassword = String(formData.get("confirm-password"));
-    if (!confirmPassword) {
-      return toast.error("Confirm Password is required");
-    }
-    if (password !== confirmPassword) {
+    if (!confirmPassword) return toast.error("Confirm Password is required");
+    if (password !== confirmPassword)
       return toast.error("Passwords do not match");
-    }
-
-    console.log({ email, password, confirmPassword });
 
     await authClient.signUp.email(
       {
+        name,
         email,
-        name: "", // user name (optional)
         password,
       },
       {
         onRequest: () => {
-          // do somethinng
+          setIsPending(true);
+        },
+        onResponse: () => {
+          setIsPending(false);
         },
         onSuccess: () => {
-          // redirect or show success message
+          toast.success("Account created successfully");
+          router.push("/dashboard/profile");
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);
@@ -76,6 +80,15 @@ export function SignupForm({
                 </p>
               </div>
               <Field>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input
+                  id="name"
+                  name="name"
+                  type="text"
+                  placeholder="John Doe"
+                />
+              </Field>
+              <Field>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
@@ -85,21 +98,37 @@ export function SignupForm({
                 />
               </Field>
               <Field>
-                <FieldLabel htmlFor="password">Password</FieldLabel>
-                <Input id="password" name="password" type="password" />
+                <Field className="grid grid-cols-2 gap-4">
+                  <Field>
+                    <FieldLabel htmlFor="password">Password</FieldLabel>
+                    <Input id="password" name="password" type="password" />
+                  </Field>
+                  <Field>
+                    <FieldLabel htmlFor="confirm-password">
+                      Confirm Password
+                    </FieldLabel>
+                    <Input
+                      id="confirm-password"
+                      name="confirm-password"
+                      type="password"
+                    />
+                  </Field>
+                </Field>
+                <FieldDescription>
+                  Must be at least 8 characters long.
+                </FieldDescription>
               </Field>
               <Field>
-                <FieldLabel htmlFor="confirm-password">
-                  Confirm Password
-                </FieldLabel>
-                <Input
-                  id="confirm-password"
-                  name="confirm-password"
-                  type="password"
-                />
-              </Field>
-              <Field>
-                <Button type="submit">Create Account</Button>
+                <Button type="submit" disabled={isPending}>
+                  {isPending ? (
+                    <>
+                      <Spinner />
+                      Creating account...
+                    </>
+                  ) : (
+                    "Create account"
+                  )}
+                </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
                 Or continue with
