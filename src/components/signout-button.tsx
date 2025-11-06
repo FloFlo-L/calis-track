@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -49,7 +50,10 @@ export const SignOutButton = ({ className, size }: SignOutButtonProps) => {
           Signing out...
         </>
       ) : (
-        "Sign Out"
+        <>
+          <LogOut className="size-4" />
+          Sign out
+        </>
       )}
     </Button>
   );

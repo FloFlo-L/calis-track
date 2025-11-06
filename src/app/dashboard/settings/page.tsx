@@ -20,7 +20,7 @@ export default function SettingsPage() {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center gap-3">
             <Settings className="h-8 w-8" strokeWidth={1.5} />
-            <h1 className="text-2xl font-bold">Paramètres</h1>
+            <h1 className="text-2xl font-bold">Settings</h1>
           </div>
         </div>
       </div>
@@ -36,7 +36,11 @@ export default function SettingsPage() {
             <CardDescription>Personalize the look of the app</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <ThemeToggle variant="outline" className="w-full" />
+            <ThemeToggle
+              variant="outline"
+              withLabel={true}
+              className="w-full justify-start"
+            />
           </CardContent>
         </Card>
 
@@ -54,11 +58,11 @@ export default function SettingsPage() {
           <CardContent className="space-y-3">
             <Button
               variant="outline"
-              className="w-full justify-start bg-transparent"
+              className="w-full justify-start"
               size="lg"
             >
               <Bell className="h-4 w-4 mr-2" />
-              Notification Settings
+              Notification settings
             </Button>
           </CardContent>
         </Card>
@@ -74,11 +78,11 @@ export default function SettingsPage() {
           <CardContent className="space-y-3">
             <Button
               variant="outline"
-              className="w-full justify-start bg-transparent"
+              className="w-full justify-start"
               size="lg"
             >
               <Shield className="h-4 w-4 mr-2" />
-              Privacy Policy
+              Privacy policy
             </Button>
           </CardContent>
         </Card>

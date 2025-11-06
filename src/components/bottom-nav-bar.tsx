@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { Home, Plus, TrendingUp, User } from "lucide-react";
+import { BicepsFlexed, Home, TrendingUp, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,7 +10,7 @@ export function BottomNavBar() {
 
   const links = [
     { href: "/dashboard", icon: Home, label: "Home" },
-    { href: "/dashboard/create", icon: Plus, label: "Create" },
+    { href: "/dashboard/workout", icon: BicepsFlexed, label: "Workout" },
     { href: "/dashboard/progress", icon: TrendingUp, label: "Progress" },
     { href: "/dashboard/profile", icon: User, label: "Profile" },
   ];

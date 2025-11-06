@@ -51,6 +51,16 @@
       box-shadow: 0 0 0 8px var(--pulse-color);
     }
   }
+  --animate-pulse-card: pulseCard 1.5s ease-out infinite;
+  @keyframes pulseCard {
+    0%,
+    100% {
+      box-shadow: 0 0 0 0 var(--pulsebtn);
+    }
+    50% {
+      box-shadow: 0 0 0 8px var(--pulsebtn);
+    }
+  }
   --animate-pulse-text: pulseText 1.5s ease-out infinite;
   @keyframes pulseText {
     0%,
