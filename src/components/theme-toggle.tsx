@@ -22,7 +22,7 @@ export function ThemeToggle({
     <>
       <Button
         variant={variant || "ghost"}
-        size={withLabel ? "default" : "icon"}
+        size={withLabel ? "lg" : "icon"}
         onClick={() => setTheme("light")}
         className={`m-0 hidden dark:inline-flex cursor-pointer ${className}`}
       >

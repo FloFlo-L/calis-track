@@ -1,8 +1,57 @@
-import { Button } from "@/components/ui/button";
-import { ChevronLeft, Save } from "lucide-react";
+"use client";
+
+import {
+  DndContext,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  arrayMove,
+  rectSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable";
+import { ChevronLeft, Plus, Save } from "lucide-react";
 import Link from "next/link";
+import React from "react";
+
+import { SortableItem } from "@/components/sortable-item";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
 
 export default function WorkoutCreatePage() {
+  const [items, setItems] = React.useState(["1", "2", "3", "4", "5"]);
+  const [activeId, setActiveId] = React.useState(null);
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  );
+
+  const handleDragStart = (event) => {
+    setActiveId(event.active.id);
+  };
+
+  const handleDragEnd = (event) => {
+    //setActiveId(null);
+    const { active, over } = event;
+    console.log({ active, over });
+
+    if (active.id !== over.id) {
+      setItems((items) => {
+        const oldIndex = items.indexOf(active.id);
+        const newIndex = items.indexOf(over.id);
+
+        return arrayMove(items, oldIndex, newIndex);
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen pb-20 bg-background">
       {/* Header */}
@@ -13,7 +62,7 @@ export default function WorkoutCreatePage() {
             className="flex items-center gap-3 hover:cursor-pointer"
           >
             <ChevronLeft className="size-5" />
-            <h1 className="text-xl font-bold flex-1">Créer une séance</h1>
+            <h1 className="text-xl font-bold flex-1">Create a workout</h1>
           </Link>
           <Button className="bg-primary text-primary-foreground">
             <Save className="size-5" />
@@ -21,6 +70,46 @@ export default function WorkoutCreatePage() {
           </Button>
         </div>
       </div>
+
+      <div className="px-4 py-6 space-y-6 max-w-lg mx-auto">
+        {/* Workout name */}
+        <Card className="gap-4">
+          <CardHeader>
+            <CardTitle className="text-lg">Workout name</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <Input
+              placeholder="Ex: Full Body, Upper body EMOM, Legs day..."
+              className="text-sm"
+            />
+          </CardContent>
+        </Card>
+      </div>
+
+      {/** Workout exercises list */}
+      <div>
+        <DndContext
+          sensors={sensors}
+          onDragEnd={handleDragEnd}
+          onDragStart={handleDragStart}
+        >
+          <SortableContext items={items} strategy={rectSortingStrategy}>
+            {items.map((id) => (
+              <div key={id} className="px-4 py-2 max-w-lg mx-auto">
+                <SortableItem key={id} id={id} value={id} />
+              </div>
+            ))}
+          </SortableContext>
+        </DndContext>
+      </div>
+
+      {/* CTA add workout exercises */}
+      <Button
+        className="fixed bottom-22 right-4 rounded-full p-6 shadow-md"
+        size="icon"
+      >
+        <Plus className="size-5" />
+      </Button>
     </div>
   );
 }

@@ -47,26 +47,26 @@ export default function DashboardPage() {
       </div>
 
       <div className="px-4 py-6 space-y-6 max-w-lg mx-auto">
-        <Card className="bg-linear-to-br from-primary to-primary/80 border-0 text-primary-foreground animate-pulse-card">
-          <CardContent className="p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <h3 className="font-bold text-lg mb-1">New session</h3>
-                <p className="text-sm text-primary-foreground/80">
-                  Create your first workout session
-                </p>
-              </div>
-              <Link href="/dashboard/create">
+        <Link href="/dashboard/workout/create" className="flex">
+          <Card className="w-full bg-linear-to-br from-primary to-primary/80 border-0 text-primary-foreground animate-pulse-card">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-lg mb-1">New session</h3>
+                  <p className="text-sm text-primary-foreground/80">
+                    Create your first workout session
+                  </p>
+                </div>
                 <Button
                   size="icon"
                   className="h-12 w-12 rounded-full bg-primary-foreground text-primary hover:bg-primary-foreground/90"
                 >
                   <BicepsFlexed className="size-7" />
                 </Button>
-              </Link>
-            </div>
-          </CardContent>
-        </Card>
+              </div>
+            </CardContent>
+          </Card>
+        </Link>
 
         {/* Stats rapides */}
         <div className="grid grid-cols-2 gap-3">

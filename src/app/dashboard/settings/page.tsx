@@ -61,7 +61,7 @@ export default function SettingsPage() {
               className="w-full justify-start"
               size="lg"
             >
-              <Bell className="h-4 w-4 mr-2" />
+              <Bell className="size-4" />
               Notification settings
             </Button>
           </CardContent>
@@ -81,7 +81,7 @@ export default function SettingsPage() {
               className="w-full justify-start"
               size="lg"
             >
-              <Shield className="h-4 w-4 mr-2" />
+              <Shield className="size-4" />
               Privacy policy
             </Button>
           </CardContent>
