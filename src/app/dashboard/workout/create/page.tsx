@@ -2,8 +2,11 @@
 
 import {
   DndContext,
+  DragEndEvent,
+  DragStartEvent,
   KeyboardSensor,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -11,7 +14,6 @@ import {
   arrayMove,
   rectSortingStrategy,
   SortableContext,
-  sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable";
 import { ChevronLeft, Plus, Save } from "lucide-react";
 import Link from "next/link";
@@ -24,28 +26,31 @@ import { Input } from "@/components/ui/input";
 
 export default function WorkoutCreatePage() {
   const [items, setItems] = React.useState(["1", "2", "3", "4", "5"]);
-  const [activeId, setActiveId] = React.useState(null);
+  const [activeId, setActiveId] = React.useState<string | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    })
+    useSensor(MouseSensor),
+    useSensor(TouchSensor),
+    useSensor(KeyboardSensor)
   );
 
-  const handleDragStart = (event) => {
-    setActiveId(event.active.id);
+  const handleDragStart = (event: DragStartEvent) => {
+    setActiveId(event.active.id as string);
   };
 
-  const handleDragEnd = (event) => {
+  const handleDragEnd = (event: DragEndEvent) => {
     //setActiveId(null);
     const { active, over } = event;
     console.log({ active, over });
 
-    if (active.id !== over.id) {
+    if (!over) {
+      return;
+    }
+
+    if (active.id !== (over.id as string)) {
       setItems((items) => {
-        const oldIndex = items.indexOf(active.id);
-        const newIndex = items.indexOf(over.id);
+        const oldIndex = items.indexOf(active.id as string);
+        const newIndex = items.indexOf(over.id as string);
 
         return arrayMove(items, oldIndex, newIndex);
       });
