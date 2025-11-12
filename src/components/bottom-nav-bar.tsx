@@ -1,25 +1,32 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useCurrentLocale } from "@/locales/client";
 import { BicepsFlexed, Home, TrendingUp, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export function BottomNavBar() {
-  const pathname = usePathname();
+  const pathname = usePathname() ?? "";
+  const locale = useCurrentLocale();
+  const baseDashboard = `/${locale}/dashboard`;
 
   const links = [
-    { href: "/dashboard", icon: Home, label: "Home" },
-    { href: "/dashboard/workout", icon: BicepsFlexed, label: "Workout" },
-    { href: "/dashboard/progress", icon: TrendingUp, label: "Progress" },
-    { href: "/dashboard/profile", icon: User, label: "Profile" },
+    { href: `${baseDashboard}`, icon: Home, label: "Home" },
+    { href: `${baseDashboard}/workout`, icon: BicepsFlexed, label: "Workout" },
+    { href: `${baseDashboard}/progress`, icon: TrendingUp, label: "Progress" },
+    { href: `${baseDashboard}/profile`, icon: User, label: "Profile" },
   ];
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t border-border">
+      {" "}
       <div className="flex items-center justify-around h-16 max-w-lg mx-auto">
         {links.map((link) => {
-          const isActive = pathname === link.href;
+          const isActive =
+            pathname === link.href ||
+            (link.href !== baseDashboard &&
+              pathname.startsWith(`${link.href}/`));
           const Icon = link.icon;
           return (
             <Link

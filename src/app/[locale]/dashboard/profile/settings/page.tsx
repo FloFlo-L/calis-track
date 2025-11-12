@@ -1,5 +1,6 @@
 "use client";
 
+import LocalSelect from "@/components/local-select";
 import { SignOutButton } from "@/components/signout-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Bell, Info, Palette, Settings, Shield } from "lucide-react";
+import { useScopedI18n } from "@/locales/client";
+import { Bell, Globe, Info, Palette, Settings, Shield } from "lucide-react";
 
 export default function SettingsPage() {
+  const t = useScopedI18n("settings");
+
   return (
     <div className="min-h-screen pb-20 bg-background">
       {/* Header */}
@@ -20,7 +24,7 @@ export default function SettingsPage() {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center gap-3">
             <Settings className="h-8 w-8" strokeWidth={1.5} />
-            <h1 className="text-2xl font-bold">Settings</h1>
+            <h1 className="text-2xl font-bold">{t("title")}</h1>
           </div>
         </div>
       </div>
@@ -31,15 +35,37 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Palette className="h-5 w-5 text-primary" />
-              Appearance
+              {t("apparence.label")}
             </CardTitle>
-            <CardDescription>Personalize the look of the app</CardDescription>
+            <CardDescription>{t("apparence.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <ThemeToggle
               variant="outline"
               withLabel={true}
               className="w-full justify-start"
+              modes={{
+                light: t("apparence.modes.light"),
+                dark: t("apparence.modes.dark"),
+              }}
+            />
+          </CardContent>
+        </Card>
+
+        {/* Language */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2 text-lg">
+              <Globe className="h-5 w-5 text-primary" />
+              {t("language.label")}
+            </CardTitle>
+            <CardDescription>{t("language.description")}</CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <LocalSelect
+              className="w-full justify-start"
+              variant="outline"
+              selectLabel={t("language.select")}
             />
           </CardContent>
         </Card>
@@ -49,11 +75,9 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Bell className="h-5 w-5 text-primary" />
-              Notifications
+              {t("notifications.label")}
             </CardTitle>
-            <CardDescription>
-              Manage your notification preferences
-            </CardDescription>
+            <CardDescription>{t("notifications.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button
@@ -62,7 +86,7 @@ export default function SettingsPage() {
               size="lg"
             >
               <Bell className="size-4" />
-              Notification settings
+              {t("notifications.cta")}
             </Button>
           </CardContent>
         </Card>
@@ -71,9 +95,9 @@ export default function SettingsPage() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Shield className="h-5 w-5 text-primary" />
-              Privacy
+              {t("privacy.label")}
             </CardTitle>
-            <CardDescription>Protect your personal data</CardDescription>
+            <CardDescription>{t("privacy.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
             <Button
@@ -82,17 +106,17 @@ export default function SettingsPage() {
               size="lg"
             >
               <Shield className="size-4" />
-              Privacy policy
+              {t("privacy.cta")}
             </Button>
           </CardContent>
         </Card>
 
-        {/* À propos */}
+        {/* About */}
         <Card className="gap-4">
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <Info className="h-5 w-5 text-primary" />
-              About
+              {t("about.label")}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
@@ -101,8 +125,12 @@ export default function SettingsPage() {
               <span className="text-sm font-medium">1.0.0</span>
             </div>
             <div className="flex items-center justify-between py-2">
-              <span className="text-sm text-muted-foreground">Last update</span>
-              <span className="text-sm font-medium">November 2025</span>
+              <span className="text-sm text-muted-foreground">
+                {t("about.lastUpdated.label")}
+              </span>
+              <span className="text-sm font-medium">
+                {t("about.lastUpdated.date")}
+              </span>
             </div>
           </CardContent>
         </Card>
@@ -110,7 +138,14 @@ export default function SettingsPage() {
         {/* Sign Out */}
         <Card className="border-destructive/50">
           <CardContent>
-            <SignOutButton size="lg" className="w-full" />
+            <SignOutButton
+              size="lg"
+              className="w-full"
+              label={[
+                t("signOutButton.signingOut"),
+                t("signOutButton.signOut"),
+              ]}
+            />
           </CardContent>
         </Card>
       </div>

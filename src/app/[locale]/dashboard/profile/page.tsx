@@ -1,6 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
 import { Settings } from "lucide-react";
 import { headers } from "next/headers";
@@ -34,16 +33,9 @@ export default async function ProfilePage() {
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6">
             <h1 className="text-2xl font-bold">Profil</h1>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="text-primary-foreground hover:bg-primary-foreground/20 hover:text-primary-foreground"
-              asChild
-            >
-              <Link href="/dashboard/settings">
-                <Settings className="size-8" strokeWidth={1.5} />
-              </Link>
-            </Button>
+            <Link href="/dashboard/profile/settings">
+              <Settings className="size-8" strokeWidth={1.5} />
+            </Link>
           </div>
 
           <div className="flex items-center gap-4">

@@ -11,9 +11,14 @@ import { toast } from "sonner";
 interface SignOutButtonProps {
   size?: "sm" | "lg";
   className?: string;
+  label: [string, string];
 }
 
-export const SignOutButton = ({ className, size }: SignOutButtonProps) => {
+export const SignOutButton = ({
+  className,
+  size,
+  label,
+}: SignOutButtonProps) => {
   const [isPending, setIsPending] = React.useState(false);
   const router = useRouter();
 
@@ -42,17 +47,17 @@ export const SignOutButton = ({ className, size }: SignOutButtonProps) => {
       size={size}
       onClick={handleSignOut}
       disabled={isPending}
-      className={className}
+      className={`cursor-pointer ${className}`}
     >
       {isPending ? (
         <>
           <Spinner />
-          Signing out...
+          {label[0]}
         </>
       ) : (
         <>
           <LogOut className="size-4" />
-          Sign out
+          {label[1]}
         </>
       )}
     </Button>
