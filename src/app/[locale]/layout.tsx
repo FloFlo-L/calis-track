@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export default async function AuthLayout({
+export default async function MainLayout({
   children,
   params,
 }: Readonly<{
@@ -22,7 +22,6 @@ export default async function AuthLayout({
   params: { locale: string };
 }>) {
   const { locale } = await params;
-  console.log("Locale in layout:", locale);
 
   return (
     <html lang={locale} suppressHydrationWarning>

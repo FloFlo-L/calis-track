@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { CirclePlus } from "lucide-react";
+import { BicepsFlexed, Plus } from "lucide-react";
 import Link from "next/link";
 
 export default function WorkoutPage() {
@@ -12,12 +12,25 @@ export default function WorkoutPage() {
         </div>
       </div>
 
-      <div className="flex-1 flex items-center justify-center">
-        <Button variant="ghost" size="icon" asChild>
-          <Link href="/dashboard/workout/create">
-            <CirclePlus className="size-12" strokeWidth={1.8} />
-          </Link>
-        </Button>
+      {/* Empty workouts */}
+      <div className="flex flex-col items-center justify-center px-4 py-20 max-w-lg mx-auto h-[calc(100vh-170px)]">
+        <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+          <BicepsFlexed className="h-10 w-10 text-primary" />
+        </div>
+        <h2 className="text-xl font-bold mb-2 text-center">
+          You have no workouts yet
+        </h2>
+        <p className="text-muted-foreground text-center mb-8 text-balance">
+          Start creating your first workout
+        </p>
+        <Link href="/workout/create">
+          <Button
+            size="icon"
+            className="bg-primary text-primary-foreground rounded-full"
+          >
+            <Plus className="h-5 w-5" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

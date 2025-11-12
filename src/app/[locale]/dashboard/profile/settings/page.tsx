@@ -11,6 +11,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
 import { useScopedI18n } from "@/locales/client";
 import { Bell, Globe, Info, Palette, Settings, Shield } from "lucide-react";
 
@@ -100,14 +107,29 @@ export default function SettingsPage() {
             <CardDescription>{t("privacy.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button
-              variant="outline"
-              className="w-full justify-start"
-              size="lg"
-            >
-              <Shield className="size-4" />
-              {t("privacy.cta")}
-            </Button>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <Button
+                  variant="outline"
+                  className="w-full justify-start"
+                  size="lg"
+                >
+                  <Shield className="size-4" />
+                  {t("privacy.cta")}
+                </Button>
+              </DrawerTrigger>
+              <DrawerContent>
+                <div className="mx-auto w-full max-w-md p-4 pb-6">
+                  <DrawerHeader>
+                    <DrawerTitle>{t("privacy.cta")}</DrawerTitle>
+                  </DrawerHeader>
+                  <div className="space-y-2 text-sm text-justify">
+                    <p>{t("privacy.content.0")}</p>
+                    <p>{t("privacy.content.1")}</p>
+                  </div>
+                </div>
+              </DrawerContent>
+            </Drawer>
           </CardContent>
         </Card>
 

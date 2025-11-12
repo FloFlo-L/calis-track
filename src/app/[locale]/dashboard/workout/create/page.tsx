@@ -15,7 +15,7 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import { ChevronLeft, Plus, Save } from "lucide-react";
+import { ChevronLeft, Dumbbell, Plus, Save } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -89,31 +89,44 @@ export default function WorkoutCreatePage() {
             />
           </CardContent>
         </Card>
-      </div>
 
-      {/** Workout exercises list */}
-      <div>
-        <DndContext
-          sensors={sensors}
-          onDragEnd={handleDragEnd}
-          onDragStart={handleDragStart}
-        >
-          <SortableContext items={items} strategy={rectSortingStrategy}>
-            {items.map((id) => (
-              <div key={id} className="px-4 py-2 max-w-lg mx-auto">
-                <SortableItem key={id} id={id} value={id} />
-              </div>
-            ))}
-          </SortableContext>
-        </DndContext>
+        {/* Empty exercices */}
+        <Card className="bg-muted/50 border-dashed">
+          <CardContent className="p-12 text-center">
+            <Dumbbell className="h-12 w-12 text-muted-foreground mx-auto mb-3 opacity-50" />
+            <p className="text-muted-foreground text-sm">
+              Add exercises to build your workout
+            </p>
+          </CardContent>
+        </Card>
+
+        {/** Workout exercises list */}
+        <div>
+          <DndContext
+            sensors={sensors}
+            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
+          >
+            <SortableContext items={items} strategy={rectSortingStrategy}>
+              {items.map((id) => (
+                <div key={id} className="mb-4">
+                  <SortableItem key={id} id={id} value={id} />
+                </div>
+              ))}
+            </SortableContext>
+          </DndContext>
+        </div>
       </div>
 
       {/* CTA add workout exercises */}
       <Button
         className="fixed bottom-22 right-4 rounded-full p-6 shadow-md"
         size="icon"
+        asChild
       >
-        <Plus className="size-5" />
+        <Link href="/dashboard/workout/create/select-exercice">
+          <Plus className="size-5" />
+        </Link>
       </Button>
     </div>
   );

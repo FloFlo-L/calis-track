@@ -118,7 +118,7 @@ export default function Navbar() {
 
             {/* Theme toggle (always on the right) */}
             <div className="flex items-center">
-              <ThemeToggle />
+              <ThemeToggle modes={{ light: "Light", dark: "Dark" }} />
             </div>
           </div>
         </div>
