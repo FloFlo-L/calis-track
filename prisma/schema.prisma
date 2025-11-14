@@ -1,13 +1,86 @@
-
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider      = "prisma-client-js"
+  output        = "../src/generated/prisma"
   binaryTargets = ["native", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+// List exercices available (added by admin)
+model Exercise {
+  id        String   @id @default(uuid())
+  images    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  // Relation with WorkoutExercise
+  workoutExercises WorkoutExercise[]
+  exerciseLangs    ExerciseLang[]
+
+  @@map("exercise")
+}
+
+model ExerciseLang {
+  id          String @id @default(uuid())
+  name        String
+  description String
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  langId String
+  lang   Lang   @relation(fields: [langId], references: [id], onDelete: Cascade)
+
+  @@unique([exerciseId, langId])
+  @@map("exercise_lang")
+}
+
+// User-created workouts
+model Workout {
+  id        String   @id @default(uuid())
+  title     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relation with WorkoutExercise
+  workoutExercises WorkoutExercise[]
+
+  @@map("workout")
+}
+
+// Join table between Workout and Exercise with additional fields
+model WorkoutExercise {
+  id        String   @id @default(uuid())
+  position  Int
+  sets      Int
+  reps      Int
+  restTime  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  workoutId String
+  workout   Workout @relation(fields: [workoutId], references: [id], onDelete: Cascade)
+
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  // Index to improve query performance by position
+  @@index([workoutId, position])
+  @@map("workout_exercise")
+}
+
+model Lang {
+  id            String         @id @default(uuid())
+  code          String         @unique
+  exerciseLangs ExerciseLang[]
+
+  @@map("lang")
 }
 
 model User {
@@ -20,6 +93,7 @@ model User {
   updatedAt     DateTime  @default(now()) @updatedAt
   sessions      Session[]
   accounts      Account[]
+  workouts      Workout[]
 
   @@map("user")
 }

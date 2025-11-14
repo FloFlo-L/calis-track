@@ -15,7 +15,7 @@ import {
   rectSortingStrategy,
   SortableContext,
 } from "@dnd-kit/sortable";
-import { ChevronLeft, Dumbbell, Plus, Save } from "lucide-react";
+import { ChevronLeft, Clock, Dumbbell, Plus, Save } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 
@@ -89,6 +89,29 @@ export default function WorkoutCreatePage() {
             />
           </CardContent>
         </Card>
+
+        {/* Workout details */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <Dumbbell className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Exercices</p>
+              <p className="text-sm font-semibold">X</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
+              <Clock className="h-5 w-5 text-primary" />
+            </div>
+            <div>
+              <p className="text-xs text-muted-foreground">Durée</p>
+              <p className="text-sm font-semibold">XX mins</p>
+            </div>
+          </div>
+        </div>
 
         {/* Empty exercices */}
         <Card className="bg-muted/50 border-dashed">

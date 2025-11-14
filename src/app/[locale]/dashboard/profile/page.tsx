@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { auth } from "@/lib/auth";
+import { getCurrentLocale } from "@/locales/server";
 import { Settings } from "lucide-react";
 import { headers } from "next/headers";
 import Link from "next/link";
@@ -9,6 +10,7 @@ export default async function ProfilePage() {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
+  const locale = await getCurrentLocale();
 
   if (!session) {
     return (
@@ -28,25 +30,27 @@ export default async function ProfilePage() {
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      {/* Header avec profil */}
+      {/* Header with profile */}
       <div className="bg-linear-to-br from-primary to-primary/70 text-primary-foreground p-6 pb-12">
         <div className="max-w-lg mx-auto">
           <div className="flex items-center justify-between mb-6">
-            <h1 className="text-2xl font-bold">Profil</h1>
-            <Link href="/dashboard/profile/settings">
-              <Settings className="size-8" strokeWidth={1.5} />
+            <h1 className="text-2xl font-bold">Profile</h1>
+            <Link href={`/${locale}/dashboard/profile/settings`}>
+              <Settings className="size-7 md:size-8" strokeWidth={1.5} />
             </Link>
           </div>
 
           <div className="flex items-center gap-4">
-            <Avatar className="h-20 w-20 border-4 border-primary-foreground/20">
+            <Avatar className="size-18 md:size-20 border-4 border-primary-foreground/20">
               <AvatarImage src="/placeholder.svg" />
-              <AvatarFallback className="bg-primary-foreground/20 text-primary-foreground text-2xl font-bold">
+              <AvatarFallback className="bg-primary-foreground/20 text-primary-foreground text-xl md:text-2xl font-bold">
                 {session.user.name?.charAt(0).toUpperCase()}
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <h2 className="text-2xl font-bold">{session.user.name}</h2>
+              <h2 className="text-xl md:text-2xl font-bold">
+                {session.user.name}
+              </h2>
               <p className="text-primary-foreground/80">
                 Member since{" "}
                 <span className="sm:hidden">
@@ -72,6 +76,15 @@ export default async function ProfilePage() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="max-w-lg mx-auto p-4 mt-6 flex flex-col items-center justify-center text-center h-[calc(100vh-45vh)]">
+        <p className="text-primary text-2xl font-bold">
+          This page is under construction...
+        </p>
+        <p className="text-muted-foreground">
+          Come back later to see your profile !
+        </p>
       </div>
     </div>
   );

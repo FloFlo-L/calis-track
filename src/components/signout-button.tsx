@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
+import { useCurrentLocale } from "@/locales/client";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -12,6 +13,7 @@ interface SignOutButtonProps {
   size?: "sm" | "lg";
   className?: string;
   label: [string, string];
+  redirectTo?: string;
 }
 
 export const SignOutButton = ({
@@ -21,6 +23,7 @@ export const SignOutButton = ({
 }: SignOutButtonProps) => {
   const [isPending, setIsPending] = React.useState(false);
   const router = useRouter();
+  const locale = useCurrentLocale();
 
   async function handleSignOut() {
     await authClient.signOut({
@@ -33,7 +36,7 @@ export const SignOutButton = ({
         },
         onSuccess: () => {
           toast.success("Signed out successfully, see you soon !");
-          router.push("/auth/login");
+          router.push(`/${locale}/auth/login`);
         },
         onError: (ctx) => {
           toast.error(ctx.error.message);

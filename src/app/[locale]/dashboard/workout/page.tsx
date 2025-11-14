@@ -23,14 +23,15 @@ export default function WorkoutPage() {
         <p className="text-muted-foreground text-center mb-8 text-balance">
           Start creating your first workout
         </p>
-        <Link href="/workout/create">
-          <Button
-            size="icon"
-            className="bg-primary text-primary-foreground rounded-full"
-          >
+        <Button
+          size="icon-lg"
+          className="bg-primary text-primary-foreground rounded-full"
+          asChild
+        >
+          <Link href="/dashboard/workout/create">
             <Plus className="h-5 w-5" />
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       </div>
     </div>
   );
