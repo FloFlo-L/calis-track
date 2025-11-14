@@ -1,6 +1,7 @@
 "use client";
 
 import LocalSelect from "@/components/local-select";
+import PushNotificationManager from "@/components/push-notification-manager";
 import { SignOutButton } from "@/components/signout-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -87,14 +88,7 @@ export default function SettingsPage() {
             <CardDescription>{t("notifications.description")}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button
-              variant="outline"
-              className="w-full justify-start"
-              size="lg"
-            >
-              <Bell className="size-4" />
-              {t("notifications.cta")}
-            </Button>
+            <PushNotificationManager />
           </CardContent>
         </Card>
         {/* Privacy */}
