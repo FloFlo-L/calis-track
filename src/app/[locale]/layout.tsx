@@ -1,8 +1,22 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 import { I18nProviderClient } from "@/locales/client";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
+export const metadata: Metadata = {
+  manifest: "/site.webmanifest",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "CalisTrack",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#ffffff",
+};
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
