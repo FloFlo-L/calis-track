@@ -81,7 +81,7 @@ export default function ExerciceConfig({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm">
+        <div className="mx-auto w-full max-w-sm pb-8">
           <DrawerHeader>
             <DrawerTitle className="text-primary">{name}</DrawerTitle>
             <DrawerDescription>Configure your exercice</DrawerDescription>
