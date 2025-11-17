@@ -164,12 +164,12 @@ export default function WorkoutCreatePage() {
   const handleSaveWorkout = async () => {
     // Validation
     if (!workoutTitle.trim()) {
-      toast.error("Le titre du workout est requis");
+      toast.error("The workout title is required");
       return;
     }
 
     if (items.length === 0) {
-      toast.error("Vous devez ajouter au moins un exercice");
+      toast.error("You must add at least one exercise");
       return;
     }
 
@@ -182,18 +182,18 @@ export default function WorkoutCreatePage() {
       });
 
       if (result.success) {
-        toast.success("Workout créé avec succès!");
-        // Nettoyer le sessionStorage
+        toast.success("Workout created successfully!");
+        // Clear sessionStorage
         sessionStorage.removeItem("workout-exercises");
         sessionStorage.removeItem("workout-title");
-        // Rediriger vers la page des workouts
+        // Redirect to workouts page
         router.push("/dashboard/workout");
       } else {
-        toast.error(result.error || "Erreur lors de la création du workout");
+        toast.error(result.error || "Error creating workout");
       }
     } catch (error) {
       console.error("Error saving workout:", error);
-      toast.error("Une erreur est survenue");
+      toast.error("An error occurred while saving the workout");
     } finally {
       setIsSaving(false);
     }

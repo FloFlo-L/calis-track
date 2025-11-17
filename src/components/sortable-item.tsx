@@ -63,7 +63,7 @@ export function SortableItem({
             </div>
             <div className="flex items-center gap-1">
               <Repeat size={14} />
-              <span>{exercise?.sets || "X"} séries</span>
+              <span>{exercise?.sets || "X"} sets</span>
             </div>
           </div>
         </div>

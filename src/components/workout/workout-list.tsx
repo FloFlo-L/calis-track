@@ -59,21 +59,20 @@ export default function WorkoutList({ workouts }: WorkoutListProps) {
               <div className="flex items-center gap-4 mt-1 text-xs text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <Dumbbell size={14} />
-                  <span>{workout.workoutExercises.length} exercices</span>
-                </span>
-                <span className="flex items-center gap-1">
-                  <Repeat size={14} />
-                  <span>{totalSets} séries</span>
+                  <span>{workout.workoutExercises.length} exercises</span>
                 </span>
                 <span className="flex items-center gap-1">
                   <BicepsFlexed size={14} />
                   <span>{totalReps} reps</span>
                 </span>
+                <span className="flex items-center gap-1">
+                  <Repeat size={14} />
+                  <span>{totalSets} sets</span>
+                </span>
               </div>
             </div>
             <span className="font-semibold flex items-center gap-2 text-sm">
-              <Clock size={14} />
-              ~{durationInMinutes} mins
+              <Clock size={14} />~{durationInMinutes} mins
             </span>
           </Link>
         );
