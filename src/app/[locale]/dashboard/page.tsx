@@ -1,36 +1,14 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { BicepsFlexed, Calendar, Dumbbell, Flame } from "lucide-react";
+import { getUserWorkouts } from "@/app/actions/workout";
+import CreateWorkoutCard from "@/components/dashboard/create-workout-card";
 import Image from "next/image";
-import Link from "next/link";
 
-export default function DashboardPage() {
-  const lastWorkouts = [
-    {
-      id: "1",
-      name: "Full Body",
-      date: "Tday",
-      exercises: 8,
-      duration: 45,
-    },
-    {
-      id: "2",
-      name: "Upper Body",
-      date: "Yesterday",
-      exercises: 6,
-      duration: 35,
-    },
-    {
-      id: "3",
-      name: "Legs & Core",
-      date: "2 days ago",
-      exercises: 7,
-      duration: 40,
-    },
-  ];
+export default async function DashboardPage() {
+  const workoutsResult = await getUserWorkouts();
+  const hasWorkouts = workoutsResult.success && workoutsResult.data.length > 0;
+
   return (
     <div className="min-h-screen pb-20 bg-background">
-      {/* Header avec image hero */}
+      {/* Header with hero image */}
       <div className="relative h-48 overflow-hidden">
         <Image
           src="/athlete-doing-calisthenics-outdoor-park.jpg"
@@ -47,29 +25,10 @@ export default function DashboardPage() {
       </div>
 
       <div className="px-4 py-6 space-y-6 max-w-lg mx-auto">
-        <Link href="/dashboard/workout/create" className="flex">
-          <Card className="w-full bg-linear-to-br from-primary to-primary/80 border-0 text-primary-foreground animate-pulse-card">
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h3 className="font-bold text-lg mb-1">New session</h3>
-                  <p className="text-sm text-primary-foreground/80">
-                    Create your first workout session
-                  </p>
-                </div>
-                <Button
-                  size="icon"
-                  className="h-12 w-12 rounded-full bg-primary-foreground text-primary hover:bg-primary-foreground/90"
-                >
-                  <BicepsFlexed className="size-7" />
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </Link>
+        <CreateWorkoutCard hasWorkouts={hasWorkouts} />
 
         {/* Stats rapides */}
-        <div className="grid grid-cols-2 gap-3">
+        {/* <div className="grid grid-cols-2 gap-3">
           <Card className="bg-linear-to-br from-primary/20 to-primary/5 border border-primary/40">
             <CardContent className="p-4 flex items-center gap-3">
               <div className="p-2 rounded-lg bg-primary/20">
@@ -93,10 +52,10 @@ export default function DashboardPage() {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div> */}
 
         {/* Last workouts */}
-        <div>
+        {/* <div>
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-xl font-bold">Last workouts</h2>
             <Link href="/progress">
@@ -133,7 +92,7 @@ export default function DashboardPage() {
               </Card>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
