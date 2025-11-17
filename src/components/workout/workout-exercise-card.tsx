@@ -70,7 +70,7 @@ export default function WorkoutExerciseCard({
         <div
           {...attributes}
           {...listeners}
-          className="cursor-grab active:cursor-grabbing touch-none"
+          className="cursor-grab active:cursor-grabbing touch-none mr-6"
         >
           <GripVertical className="h-5 w-5 text-muted-foreground" />
         </div>
@@ -117,7 +117,7 @@ export default function WorkoutExerciseCard({
             e.stopPropagation();
             onDelete?.();
           }}
-          className="cursor-pointer mr-3"
+          className="cursor-pointer"
         >
           <Trash className="h-4 w-4 text-destructive" />
         </Button>
