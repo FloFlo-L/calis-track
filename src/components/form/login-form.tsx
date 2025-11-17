@@ -14,6 +14,7 @@ import { Spinner } from "@/components/ui/spinner";
 import { authClient } from "@/lib/auth-client";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -118,7 +119,8 @@ export function LoginForm({
                 </Button>
               </Field>
               <FieldDescription className="text-center">
-                Don&apos;t have an account ? <a href="/auth/signup">Sign up</a>
+                Don&apos;t have an account ?{" "}
+                <Link href="/auth/signup">Sign up</Link>
               </FieldDescription>
             </FieldGroup>
           </form>
