@@ -54,7 +54,7 @@ export default function WorkoutExerciseEditDrawer({
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent>
-        <div className="mx-auto w-full max-w-sm pb-24">
+        <div className="mx-auto w-full max-w-sm pb-8">
           <DrawerHeader>
             <DrawerTitle className="text-primary">Update exercise</DrawerTitle>
             <DrawerDescription>{exerciseName}</DrawerDescription>
