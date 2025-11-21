@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { getCurrentLocale } from "@/locales/server";
-import ExerciceListClient from "./exercice-list-client";
+import ExerciceSearchWrapper from "./exercice-search-wrapper";
 
 interface Exercise {
   id: string;
@@ -8,16 +8,24 @@ interface Exercise {
 }
 
 interface ExerciseLang {
-  id: string;
   name: string;
   description: string;
-  exerciseId: string;
-  langId: string;
 }
 
-// Extend Exercise to include its translations
+interface CategoryLang {
+  name: string;
+}
+
+interface ExerciseCategory {
+  category: {
+    categoriesLang: CategoryLang[];
+  };
+}
+
+// Extend Exercise to include its translations and categories
 interface ExerciseWithLang extends Exercise {
   exerciseLangs: ExerciseLang[];
+  exerciseCategories: ExerciseCategory[];
 }
 
 export default async function ExerciceList() {
@@ -29,9 +37,43 @@ export default async function ExerciceList() {
         where: {
           lang: { code: locale },
         },
+        select: {
+          name: true,
+          description: true,
+        },
+      },
+      exerciseCategories: {
+        include: {
+          category: {
+            include: {
+              categoriesLang: {
+                where: {
+                  lang: { code: locale },
+                },
+                select: {
+                  name: true,
+                },
+              },
+            },
+          },
+        },
       },
     },
   });
 
-  return <ExerciceListClient exercises={exercises} />;
+  // Extract unique categories from all exercises
+  const categoriesSet = new Set<string>();
+  exercises.forEach((exercise) => {
+    exercise.exerciseCategories.forEach((ec) => {
+      const categoryName = ec.category.categoriesLang[0]?.name;
+      if (categoryName) {
+        categoriesSet.add(categoryName);
+      }
+    });
+  });
+  const categories = Array.from(categoriesSet).sort();
+
+  return (
+    <ExerciceSearchWrapper exercises={exercises} categories={categories} />
+  );
 }

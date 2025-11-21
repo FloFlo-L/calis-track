@@ -87,9 +87,9 @@ export default function ExerciceConfig({
             <DrawerDescription>Configure your exercice</DrawerDescription>
           </DrawerHeader>
           <div className="mt-6 space-y-6">
-            <div className="relative w-24 h-24 rounded-xl border border-primary/20 mx-auto">
+            <div className="relative w-24 h-24 mx-auto">
               <Image
-                src={`/${image}`}
+                src={`/images/exercises/${image}`}
                 alt={name}
                 fill
                 className="object-cover"

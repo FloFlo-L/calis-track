@@ -17,14 +17,14 @@ model Exercise {
   updatedAt DateTime @default(now()) @updatedAt
 
   // Relation with WorkoutExercise
-  workoutExercises WorkoutExercise[]
-  exerciseLangs    ExerciseLang[]
+  workoutExercises     WorkoutExercise[]
+  exerciseLangs        ExerciseLang[]
+  exerciseCategories   ExerciseCategory[]
 
   @@map("exercise")
 }
 
 model ExerciseLang {
-  id          String @id @default(uuid())
   name        String
   description String
 
@@ -36,6 +36,42 @@ model ExerciseLang {
 
   @@unique([exerciseId, langId])
   @@map("exercise_lang")
+}
+
+model ExerciseCategory {
+  exerciseId String
+  exercise   Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@unique([exerciseId, categoryId])
+  @@map("exercise_category")
+}
+
+// List of categories for exercises
+model Category {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  categoriesLang       CategoryLang[]
+  exerciseCategories   ExerciseCategory[]
+
+  @@map("category")
+}
+
+model CategoryLang {
+  name        String
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  langId String
+  lang   Lang   @relation(fields: [langId], references: [id], onDelete: Cascade)
+
+  @@unique([categoryId, langId])
+  @@map("category_lang")
 }
 
 // User-created workouts
@@ -79,6 +115,7 @@ model Lang {
   id            String         @id @default(uuid())
   code          String         @unique
   exerciseLangs ExerciseLang[]
+  categoryLangs CategoryLang[]
 
   @@map("lang")
 }
